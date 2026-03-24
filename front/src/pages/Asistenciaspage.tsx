@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAsistencias } from '../types/Useasistencias'
+import { useAsistencias } from '../hooks/useAsistencias'
 import type { Alumno } from '../types'
 
 const MESES = [
@@ -103,7 +103,7 @@ export function AsistenciasPage({ alumno, onVolver }: Props) {
             </div>
             <div className="resumen-item">
               <span className="resumen-label">Total cobrado</span>
-              <span className="resumen-val">${(resumen.totalCobrado ?? 0).toLocaleString('es-AR')}</span>
+              <span className="resumen-val">${Number(resumen.totalCobrado ?? 0).toLocaleString('es-AR')}</span>
             </div>
           </>
         ) : (

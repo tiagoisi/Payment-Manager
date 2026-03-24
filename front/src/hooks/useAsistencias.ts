@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { asistenciasService } from '../services/Alumnos.service'
+import { asistenciasService } from '../services/alumnos.service'
 import type { Alumno, Asistencia, CreateAsistenciaDto, ResumenMensual } from '../types'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ export function useAsistencias(alumno: Alumno | null, year: number, month: numbe
         setAsistencias(result)
       } else {
         const data = await asistenciasService.getByAlumnoMes(alumno.id, year, month)
-        setAsistencias(data)
+        setAsistencias(data.map((a: Asistencia) => ({ ...a, fecha: a.fecha.split('T')[0] })))
       }
     } finally {
       setLoading(false)
@@ -94,7 +94,7 @@ export function useAsistencias(alumno: Alumno | null, year: number, month: numbe
       pago: sabados.filter(f => getAsistencia(f)?.pagoDia).length,
       totalCobrado: sabados
         .filter(f => getAsistencia(f)?.pagoDia)
-        .reduce((sum, f) => sum + (getAsistencia(f)?.monto ?? 0), 0),
+        .reduce((sum, f) => sum + Number(getAsistencia(f)?.monto ?? 0), 0),
     }),
   }
 

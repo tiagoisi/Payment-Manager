@@ -40,7 +40,6 @@ export const alumnosService = {
 // ── Asistencias ──────────────────────────────────────────────────────────────
 
 export const asistenciasService = {
-  // Traer asistencias de una alumna en un mes/año
   getByAlumnoMes: async (alumnoId: number, year: number, month: number) => {
     const { data } = await api.get('/asistencias', {
       params: { alumnoId, year, month: month + 1 },
@@ -48,7 +47,6 @@ export const asistenciasService = {
     return data
   },
 
-  // Crear o actualizar asistencia de un sábado (upsert por alumnoId+fecha)
   upsert: async (dto: CreateAsistenciaDto) => {
     const { data } = await api.post('/asistencias/upsert', dto)
     return data
@@ -56,5 +54,13 @@ export const asistenciasService = {
 
   delete: async (id: number): Promise<void> => {
     await api.delete(`/asistencias/${id}`)
+  },
+
+  // Resumen del mes para el dashboard — totaliza mensuales + clases
+  resumenMes: async (year: number, month: number) => {
+    const { data } = await api.get('/asistencias/resumen-mes', {
+      params: { year, month: month + 1 },
+    })
+    return data
   },
 }

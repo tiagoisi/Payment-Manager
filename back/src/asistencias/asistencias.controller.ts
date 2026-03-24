@@ -7,7 +7,16 @@ import { UpdateAsistenciaDto } from './dto/update-asistencia.dto'
 export class AsistenciasController {
   constructor(private readonly asistenciasService: AsistenciasService) {}
 
-  // GET /asistencias?alumnoId=1&year=2025&month=3
+  // GET /asistencias/resumen-mes?year=2026&month=3
+  @Get('resumen-mes')
+  resumenMes(
+    @Query('year', ParseIntPipe) year: number,
+    @Query('month', ParseIntPipe) month: number,
+  ) {
+    return this.asistenciasService.resumenMes(year, month)
+  }
+
+  // GET /asistencias?alumnoId=1&year=2026&month=3
   @Get()
   findByAlumnoMes(
     @Query('alumnoId', ParseIntPipe) alumnoId: number,
@@ -17,7 +26,7 @@ export class AsistenciasController {
     return this.asistenciasService.findByAlumnoMes(alumnoId, year, month)
   }
 
-  // POST /asistencias/upsert  → crea o actualiza según alumnoId+fecha
+  // POST /asistencias/upsert
   @Post('upsert')
   upsert(@Body() dto: CreateAsistenciaDto) {
     return this.asistenciasService.upsert(dto)

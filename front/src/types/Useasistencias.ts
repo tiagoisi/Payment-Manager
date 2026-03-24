@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { asistenciasService } from '../services/alumnos.service'
-import type { Alumno, Asistencia, CreateAsistenciaDto, ResumenMensual } from '../types'
+import type { Alumno, Asistencia, CreateAsistenciaDto, ResumenMensual } from '.'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 

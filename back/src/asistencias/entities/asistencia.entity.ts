@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDa
 import { Alumno } from 'src/alumnos/entities/alumno.entity'
 
 @Entity('asistencias')
-@Unique(['alumnoId', 'fecha']) // un registro por alumna por sábado
+@Unique(['alumnoId', 'fecha'])
 export class Asistencia {
   @PrimaryGeneratedColumn()
   id: number
@@ -14,13 +14,13 @@ export class Asistencia {
   @JoinColumn({ name: 'alumnoId' })
   alumno: Alumno
 
-  @Column({ type: 'date' })
-  fecha: string // 'YYYY-MM-DD'
+  // varchar en vez de date — evita que Postgres devuelva objetos Date
+  @Column({ type: 'varchar', length: 10 })
+  fecha: string // siempre 'YYYY-MM-DD'
 
   @Column({ default: false })
   vino: boolean
 
-  // Solo relevante para tipo='clase'
   @Column({ default: false })
   pagoDia: boolean
 

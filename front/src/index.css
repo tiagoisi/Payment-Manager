@@ -486,3 +486,5 @@ tr:hover td { background: var(--cream); }
   .sab-card { gap: 10px; }
   .sab-monto { margin-left: 0; }
 }
+
+.bar-fill--red { background: #F09595; }
