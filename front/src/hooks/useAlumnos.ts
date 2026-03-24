@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
-import { alumnosService } from '../services/alumnos.service'
+import { alumnosService } from '../services/Alumnos.service'
 import type { Alumno, AlumnoFilters, CreateAlumnoDto, UpdateAlumnoDto } from '../types'
 
 // MOCK DATA — cuando el backend no está disponible todavía
 // con back listo, borrar USE_MOCK y toda la sección de mock
-const USE_MOCK = true
+const USE_MOCK = false
 
 const MOCK_ALUMNOS: Alumno[] = [
   { id: 1, nombre: 'Lucía Fernández',  dia: 'Sábado',    tipo: 'mensual', metodo: 'transferencia', estado: 'pagado',   monto: 6000 },

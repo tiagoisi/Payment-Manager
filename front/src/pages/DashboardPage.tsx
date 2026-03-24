@@ -10,8 +10,8 @@ export function DashboardPage() {
 
   const total = alumnos.length
   const pagados = alumnos.filter(a => a.estado === 'pagado').length
-  const recaudado = alumnos.filter(a => a.estado === 'pagado').reduce((s, a) => s + a.monto, 0)
-  const porCobrar = alumnos.filter(a => a.estado === 'pendiente').reduce((s, a) => s + a.monto, 0)
+  const recaudado = alumnos.filter(a => a.estado === 'pagado').reduce((s, a) => s + Number(a.monto), 0)
+  const porCobrar = alumnos.filter(a => a.estado === 'pendiente').reduce((s, a) => s + Number(a.monto), 0)
   const pct = total ? Math.round(pagados / total * 100) : 0
 
   // Agrupar por método de pago (solo pagados)
