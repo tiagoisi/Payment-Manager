@@ -23,6 +23,9 @@ export class Alumno {
     @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
     monto: number
 
+    @Column({ type: 'varchar', length: 7,  nullable: true, default: null })
+    ultimoPagoMes: string | null // 'YYYY-MM', ej: '2026-03'
+
     @CreateDateColumn()
     createdAt: Date
 

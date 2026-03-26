@@ -39,19 +39,36 @@ export class AlumnosService {
   // Crear nueva alumna
   async create(dto: CreateAlumnoDto): Promise<Alumno> {
     const alumno = this.repo.create(dto)
+    if (dto.estado === 'pagado') {
+      const hoy = new Date()
+      alumno.ultimoPagoMes = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}`
+    }
     return this.repo.save(alumno)
   }
 
   // Actualizar parcialmente
   async update(id: number, dto: UpdateAlumnoDto): Promise<Alumno> {
-    const alumno = await this.findOne(id) // lanza 404 si no existe
+    const alumno = await this.findOne(id) // tira 404 si no existe
     Object.assign(alumno, dto)
+    if (dto.estado === 'pagado') {
+      const hoy = new Date()
+      alumno.ultimoPagoMes = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}`
+    }
+    if (dto.estado === 'pendiente') {
+      alumno.ultimoPagoMes = null
+    }
     return this.repo.save(alumno)
   }
 
   // Shortcut para marcar pagado/pendiente
   async updateEstado(id: number, estado: 'pagado' | 'pendiente'): Promise<Alumno> {
-    return this.update(id, { estado })
+    const alumno = await this.findOne(id)
+    alumno.estado = estado
+    if (estado === 'pagado') {
+      const hoy = new Date()
+      alumno.ultimoPagoMes = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}`
+    }
+    return this.repo.save(alumno)
   }
 
   // Eliminar

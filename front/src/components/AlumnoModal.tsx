@@ -92,7 +92,7 @@ export function AlumnoModal({ open, alumno, onClose, onSave }: Props) {
         <div className="field-row">
           <div className="field">
             <label>Monto ($)</label>
-            <input type="number" value={form.monto || ''} onChange={e => set('monto', Number(e.target.value))} placeholder="6000" min={0} />
+            <input type="number" value={form.monto || ''} onChange={e => set('monto', Number(e.target.value))} placeholder="20000" min={20000} />
           </div>
           <div className="field">
             <label>Estado</label>

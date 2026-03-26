@@ -82,12 +82,14 @@ export class AsistenciasService {
     const { desde, hasta } = getRango(year, month)
     const alumnos = await this.alumnoRepo.find()
 
+    const mesConsultado = `${year}-${String(month).padStart(2, '0')}`
+
     const mensuales = alumnos.filter(a => a.tipo === 'mensual')
     const recaudadoMensual = mensuales
-      .filter(a => a.estado === 'pagado')
+      .filter(a => a.ultimoPagoMes === mesConsultado)
       .reduce((s, a) => s + Number(a.monto), 0)
     const porCobrarMensual = mensuales
-      .filter(a => a.estado === 'pendiente')
+      .filter(a => a.ultimoPagoMes === mesConsultado)
       .reduce((s, a) => s + Number(a.monto), 0)
 
     const asistPagadas = await this.repo
