@@ -45,10 +45,12 @@ export function DashboardPage() {
   }
 
   const total = alumnos.length
-  const pagados = alumnos.filter(a => a.estado === 'pagado').length
-  const pct = total ? Math.round(pagados / total * 100) : 0
-  const pendientes = alumnos.filter(a => a.estado === 'pendiente')
-
+  const mesActual = `${year}-${String(month + 1).padStart(2, '0')}`
+  const mensuales = alumnos.filter(a => a.tipo === 'mensual')
+  const pagados = mensuales.filter(a => a.ultimoPagoMes === mesActual).length
+  const pct = mensuales.length ? Math.round(pagados / mensuales.length * 100) : 0
+  const pendientes = alumnos.filter(a => a.tipo === 'mensual' && a.ultimoPagoMes !== mesActual)
+  
   // Agrupar por día para el gráfico
   const porDia: Record<string, number> = {}
   alumnos.forEach(a => { porDia[a.dia] = (porDia[a.dia] || 0) + 1 })
@@ -78,7 +80,7 @@ export function DashboardPage() {
         <div className="metric-card">
           <span className="metric-label">Al día</span>
           <span className="metric-value">{pct}%</span>
-          <span className="metric-sub">{pagados} de {total}</span>
+          <span className="metric-sub">{pagados} de {mensuales.length}</span>
         </div>
         <div className="metric-card">
           <span className="metric-label">Total recaudado</span>

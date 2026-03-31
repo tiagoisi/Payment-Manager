@@ -11,6 +11,7 @@ export interface Alumno {
   metodo: MetodoPago
   estado: EstadoPago
   monto: number
+  ultimoPagoMes?: string | null
   createdAt?: string
 }
 

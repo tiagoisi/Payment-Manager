@@ -89,7 +89,7 @@ export class AsistenciasService {
       .filter(a => a.ultimoPagoMes === mesConsultado)
       .reduce((s, a) => s + Number(a.monto), 0)
     const porCobrarMensual = mensuales
-      .filter(a => a.ultimoPagoMes === mesConsultado)
+      .filter(a => a.ultimoPagoMes !== mesConsultado)
       .reduce((s, a) => s + Number(a.monto), 0)
 
     const asistPagadas = await this.repo
