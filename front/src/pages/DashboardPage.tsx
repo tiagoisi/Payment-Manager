@@ -48,6 +48,12 @@ export function DashboardPage() {
   const mesActual = `${year}-${String(month + 1).padStart(2, '0')}`
   const mensuales = alumnos.filter(a => a.tipo === 'mensual')
   const pagados = mensuales.filter(a => a.ultimoPagoMes === mesActual).length
+  // alumnas mensuales que no pagaron el mes
+  const mensualPendiente = alumnos.filter(a => a.tipo === 'mensual' && a.ultimoPagoMes !== mesActual)
+
+  // alumnas por clase con clases sin pagar — ya lo tenemos en el resumen
+  // las mostramos si porCobrarClases > 0
+  const clasesPendientes = alumnos.filter(a => a.tipo === 'clase')
   const pct = mensuales.length ? Math.round(pagados / mensuales.length * 100) : 0
   const pendientes = alumnos.filter(a => a.tipo === 'mensual' && a.ultimoPagoMes !== mesActual)
   
@@ -143,21 +149,34 @@ export function DashboardPage() {
       {/* Pendientes */}
       <div className="dash-card">
         <h4>Pendientes de pago</h4>
-        {pendientes.length === 0 ? (
+        {mensualPendiente.length === 0 && resumen.porCobrarClases === 0 ? (
           <p className="empty-text">Todas las alumnas están al día ✓</p>
         ) : (
-          pendientes.map(a => (
-            <div className="pendiente-row" key={a.id}>
-              <div>
-                <span className="pendiente-nombre">{a.nombre}</span>
-                <span className="pendiente-dia">{a.dia}</span>
+          <>
+            {mensualPendiente.map(a => (
+              <div className="pendiente-row" key={a.id}>
+                <div>
+                  <span className="pendiente-nombre">{a.nombre}</span>
+                  <span className="pendiente-dia">{a.dia} · mensual</span>
+                </div>
+                <div className="pendiente-right">
+                  <span className="pendiente-monto">${Number(a.monto).toLocaleString('es-AR')}</span>
+                  <button className="btn-action" onClick={() => marcarPagado(a.id)}>Marcar pagado</button>
+                </div>
               </div>
-              <div className="pendiente-right">
-                <span className="pendiente-monto">${Number(a.monto).toLocaleString('es-AR')}</span>
-                <button className="btn-action" onClick={() => marcarPagado(a.id)}>Marcar pagado</button>
+            ))}
+            {resumen.porCobrarClases > 0 && clasesPendientes.map(a => (
+              <div className="pendiente-row" key={a.id}>
+                <div>
+                  <span className="pendiente-nombre">{a.nombre}</span>
+                  <span className="pendiente-dia">{a.dia} · por clase</span>
+                </div>
+                <div className="pendiente-right">
+                  <span className="pendiente-monto">tiene clases sin pagar</span>
+                </div>
               </div>
-            </div>
-          ))
+            ))}
+          </>
         )}
       </div>
 
