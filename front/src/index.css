@@ -91,6 +91,10 @@ body {
   line-height: 1;
 }
 
+.brand-icon img {
+  height: 50px;
+}
+
 .brand-title {
   font-family: 'DM Serif Display', serif;
   font-size: 20px;

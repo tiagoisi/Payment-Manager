@@ -11,9 +11,11 @@ export function App() {
     <div className="app-root">
       <header className="app-header">
         <div className="header-brand">
-          <span className="brand-icon">✦</span>
+          <span className="brand-icon">
+            <img src="/mitaitilogo2.png" alt="" />
+          </span>
           <div>
-            <h1 className="brand-title">Taller de Artesanías</h1>
+            <h1 className="brand-title">El Taller de So</h1>
             <p className="brand-sub">Sistema de alumnos y pagos</p>
           </div>
         </div>
