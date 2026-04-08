@@ -55,7 +55,6 @@ export function DashboardPage() {
   // las mostramos si porCobrarClases > 0
   const clasesPendientes = alumnos.filter(a => a.tipo === 'clase')
   const pct = mensuales.length ? Math.round(pagados / mensuales.length * 100) : 0
-  const pendientes = alumnos.filter(a => a.tipo === 'mensual' && a.ultimoPagoMes !== mesActual)
   
   // Agrupar por día para el gráfico
   const porDia: Record<string, number> = {}

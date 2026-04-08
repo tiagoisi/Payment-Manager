@@ -55,6 +55,9 @@ export function AsistenciasPage({ alumno, onVolver }: Props) {
     })
   }
 
+  const mesViendo = `${year}-${String(month + 1).padStart(2, '0')}`
+const pagoMensualEstado = alumno.ultimoPagoMes === mesViendo ? 'pagado' : 'pendiente'
+
   return (
     <div className="page">
       {/* Header */}
@@ -109,9 +112,9 @@ export function AsistenciasPage({ alumno, onVolver }: Props) {
         ) : (
           <div className="resumen-item">
             <span className="resumen-label">Pago mensual</span>
-            <span className={`badge badge-${alumno.estado}`}>
-              {alumno.estado === 'pagado' ? 'Pagado' : 'Pendiente'}
-            </span>
+            <span className={`badge badge-${pagoMensualEstado}`}>
+            {pagoMensualEstado === 'pagado' ? 'Pagado' : 'Pendiente'}
+          </span>
           </div>
         )}
       </div>
